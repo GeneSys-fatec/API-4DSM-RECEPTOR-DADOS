@@ -4,7 +4,7 @@
 1. Clone o repositório
 Bash
 git clone <url-do-repositorio>
-cd Atmos-receptor-dados
+cd API-4DSM-RECEPTOR-DADOS
 2. Crie um ambiente virtual
 Bash
 # Windows
