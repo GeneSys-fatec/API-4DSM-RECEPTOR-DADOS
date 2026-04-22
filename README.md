@@ -72,3 +72,10 @@ Terminal 2 (Simulador):
 
 Bash
 python src/simulator.py
+
+## 🧪 Executando Testes
+
+Para rodar os testes unitários e garantir que a lógica de geração de dados e a API estão íntegras:
+
+```cmd
+$env:PYTHONPATH = "src"; python -m pytest -v

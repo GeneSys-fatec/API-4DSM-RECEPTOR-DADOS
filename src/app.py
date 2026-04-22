@@ -8,7 +8,7 @@ collection = get_db_collection()
 @app.route('/receptor', methods=['POST'])
 def receive_data():
     try:
-        data = request.get_json()
+        data = request.get_json(silent=True)
         
         if not data:
             return jsonify({"error": "JSON inválido"}), 400
