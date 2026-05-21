@@ -1,0 +1,29 @@
+{
+  "name": "api-4dsm-receptor-dados",
+  "version": "1.0.0",
+  "description": "📋 Como Rodar\r 1. Clone o repositório\r Bash\r git clone <url-do-repositorio>\r cd API-4DSM-RECEPTOR-DADOS\r 2. Crie um ambiente virtual\r Bash\r # Windows\r python -m venv venv\r venv\\Scripts\\activate",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeneSys-fatec/API-4DSM-RECEPTOR-DADOS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GeneSys-fatec/API-4DSM-RECEPTOR-DADOS/issues"
+  },
+  "homepage": "https://github.com/GeneSys-fatec/API-4DSM-RECEPTOR-DADOS#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
+    "husky": "^9.1.7"
+  }
+}

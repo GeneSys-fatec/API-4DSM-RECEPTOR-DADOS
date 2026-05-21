@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   pull_request:
-    branches: ["release", "master" ]
+    branches: ["develop", "release", "master" ]
   push:
-    branches: ["release", "master" ]
+    branches: ["develop", "release", "master" ]
 
 concurrency:
   group: ci-pr-${{ github.ref }}
@@ -30,9 +30,17 @@ jobs:
           cache: pip
 
       - name: Install dependencies
-        run: python -m pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Test
-        env:
-          PYTHONPATH: src
-        run: python -m pytest test/ -v --tb=short
+          run: pytest -v --tb=short
+
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate commits with commitlint
+        uses: wagoid/commitlint-github-action@v6

@@ -1,5 +1,5 @@
-import pytest
 from src.sensors import create_sensor, generate_payload
+
 
 def test_create_sensor():
     sensor = create_sensor(1)

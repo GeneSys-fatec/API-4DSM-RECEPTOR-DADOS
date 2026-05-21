@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify, request
+
 from config import Config, get_db_collection
 
 app = Flask(__name__)

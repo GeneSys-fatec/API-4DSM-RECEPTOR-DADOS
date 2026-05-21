@@ -1,6 +1,7 @@
 import random
 import time
 
+
 def create_sensor(sensor_id):
     sensor_type = random.choice(['pluviometro', 'qualidade_ar', 'solo'])
     return {"id": sensor_id, "type": sensor_type}

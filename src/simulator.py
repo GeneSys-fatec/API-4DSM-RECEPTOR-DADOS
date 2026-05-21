@@ -1,9 +1,10 @@
-import requests
-import time
-import json
-import random
 import os
+import random
+import time
+
+import requests
 from dotenv import load_dotenv
+
 from sensors import create_sensor, generate_payload
 
 load_dotenv()
