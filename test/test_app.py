@@ -11,7 +11,7 @@ def client():
 
 
 def test_receptor_success(client, mocker):
-    mock_db = mocker.patch("src.app.collection.insert_one")
+    mock_db = mocker.patch("swagger.routes.collection.insert_one")
     mock_db.return_value.inserted_id = "12345"
 
     payload = {"uid": "TEST-01", "unixtime": 123456789, "temp": 25.5}
