@@ -15,6 +15,7 @@ config = {
     "messages_per_burst": int(os.getenv("MESSAGES_PER_BURST")),
     "delay_between_bursts": int(os.getenv("DELAY_BETWEEN_BURSTS")),
     "delay_in_burst": float(os.getenv("DELAY_IN_BURST")),
+    "request_timeout": float(os.getenv("REQUEST_TIMEOUT", "15.0")),
 }
 
 print("--- Iniciando Simulador HTTP ---")
@@ -31,7 +32,9 @@ try:
             payload = generate_payload(sensor)
 
             try:
-                response = requests.post(config["api_url"], json=payload, timeout=5)
+                response = requests.post(
+                    config["api_url"], json=payload, timeout=config["request_timeout"]
+                )
 
                 if response.status_code == 201:
                     print(f"[OK] Dados de {payload['uid']} enviados com sucesso.")
