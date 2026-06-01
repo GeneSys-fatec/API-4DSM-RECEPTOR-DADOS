@@ -1,11 +1,9 @@
 name: CI e Qualidade de Código (SonarCloud)
 
 on:
-  pull_request:
+  push:
     branches:
-      - master
-      - develop
-      - release
+      - quality-assurance
 
 jobs:
   sonarcloud:
