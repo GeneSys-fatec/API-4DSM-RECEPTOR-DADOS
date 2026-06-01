@@ -16,7 +16,7 @@ jobs:
       - name: Clonar o repositório
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Obrigatório para o SonarCloud analisar o histórico
+          fetch-depth: 0
 
       - name: Configurar Python
         uses: actions/setup-python@v5
@@ -33,7 +33,7 @@ jobs:
         run: pytest --cov=src --cov-report=xml
 
       - name: Análise do SonarCloud
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
