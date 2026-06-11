@@ -7,7 +7,7 @@ export default {
   },
   
   defaultIgnores: true,
-  ignores: [(commit) => commit.includes("Merge")],
+  ignores: [(commit) => commit.includes("Merge", "docs")],
   
   rules: {
     'type-enum': [
