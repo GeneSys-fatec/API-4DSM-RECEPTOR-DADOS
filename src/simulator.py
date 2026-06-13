@@ -9,42 +9,51 @@ from sensors import create_sensor, generate_payload
 
 load_dotenv()
 
-config = {
-    "api_url": os.getenv("API_URL"),
-    "total_virtual_sensors": int(os.getenv("TOTAL_VIRTUAL_SENSORS")),
-    "messages_per_burst": int(os.getenv("MESSAGES_PER_BURST")),
-    "delay_between_bursts": int(os.getenv("DELAY_BETWEEN_BURSTS")),
-    "delay_in_burst": float(os.getenv("DELAY_IN_BURST")),
-}
 
-print("--- Iniciando Simulador HTTP ---")
+def main():
+    config = {
+        "api_url": os.getenv("API_URL", "http://127.0.0.1:5000/receptor"),
+        "total_virtual_sensors": int(os.getenv("TOTAL_VIRTUAL_SENSORS", "5")),
+        "messages_per_burst": int(os.getenv("MESSAGES_PER_BURST", "10")),
+        "delay_between_bursts": int(os.getenv("DELAY_BETWEEN_BURSTS", "5")),
+        "delay_in_burst": float(os.getenv("DELAY_IN_BURST", "0.5")),
+        "request_timeout": float(os.getenv("REQUEST_TIMEOUT", "15.0")),
+    }
 
-virtual_sensors = [create_sensor(i) for i in range(config["total_virtual_sensors"])]
-print(f"{len(virtual_sensors)} sensores virtuais prontos.")
+    print("--- Iniciando Simulador HTTP ---")
 
-try:
-    while True:
-        print(f"\n[Burst] Enviando {config['messages_per_burst']} leituras...")
+    virtual_sensors = [create_sensor(i) for i in range(config["total_virtual_sensors"])]
+    print(f"{len(virtual_sensors)} sensores virtuais prontos.")
 
-        for i in range(config["messages_per_burst"]):
-            sensor = random.choice(virtual_sensors)
-            payload = generate_payload(sensor)
+    try:
+        while True:
+            print(f"\n[Burst] Enviando {config['messages_per_burst']} leituras...")
 
-            try:
-                response = requests.post(config["api_url"], json=payload, timeout=5)
+            for i in range(config["messages_per_burst"]):
+                sensor = random.choice(virtual_sensors)
+                payload = generate_payload(sensor)
 
-                if response.status_code == 201:
-                    print(f"[OK] Dados de {payload['uid']} enviados com sucesso.")
-                else:
-                    print(f"[ERRO] Servidor respondeu {response.status_code}: {response.text}")
+                try:
+                    response = requests.post(
+                        config["api_url"], json=payload, timeout=config["request_timeout"]
+                    )
 
-            except requests.exceptions.RequestException as e:
-                print(f"[FALHA] Não foi possível conectar à API: {e}")
+                    if response.status_code == 201:
+                        print(f"[OK] Dados de {payload['uid']} enviados com sucesso.")
+                    else:
+                        print(f"[ERRO] Servidor respondeu {response.status_code}: {response.text}")
 
-            time.sleep(config["delay_in_burst"])
+                except requests.exceptions.RequestException as e:
+                    print(f"[FALHA] Não foi possível conectar à API: {e}")
 
-        print(f"--- Aguardando {config['delay_between_bursts']}s para o próximo ciclo ---")
-        time.sleep(config["delay_between_bursts"])
+                time.sleep(config["delay_in_burst"])
 
-except KeyboardInterrupt:
-    print("\nSimulador encerrado.")
+            print(f"--- Aguardando {config['delay_between_bursts']}s para o próximo ciclo ---")
+            time.sleep(config["delay_between_bursts"])
+
+    except KeyboardInterrupt:
+        print("\nSimulador encerrado.")
+
+
+if __name__ == "__main__":  # pragma: no cover
+    main()
