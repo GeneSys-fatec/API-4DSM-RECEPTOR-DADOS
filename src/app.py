@@ -10,5 +10,5 @@ api.init_app(app)
 api.add_namespace(receptor)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     app.run(host="0.0.0.0", port=Config.PORT, debug=True)
