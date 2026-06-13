@@ -55,9 +55,9 @@ jobs:
       - name: Deploy Receptor to EC2 (develop)
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.RECEPTOR_DEV_EC2_HOST }}
-          username: ${{ secrets.RECEPTOR_DEV_EC2_USER }}
-          key: ${{ secrets.RECEPTOR_DEV_EC2_SSH_KEY }}
+          host: ${{ secrets.RECEPTOR_RELEASE_EC2_HOST }}
+          username: ${{ secrets.RECEPTOR_RELEASE_EC2_USER }}
+          key: ${{ secrets.RECEPTOR_RELEASE_EC2_SSH_KEY }}
           script: |
             cd ~/API-4DSM-RECEPTOR-DADOS
             git fetch --all
@@ -67,14 +67,14 @@ jobs:
             pip install -r requirements.txt
             pm2 describe receptor > /dev/null 2>&1 \
               && pm2 restart receptor --update-env \
-              || pm2 start /home/${{ secrets.RECEPTOR_DEV_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/.venv/bin/python \
+              || pm2 start /home/${{ secrets.RECEPTOR_RELEASE_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/.venv/bin/python \
                 --name "receptor" \
-                -- /home/${{ secrets.RECEPTOR_DEV_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/src/app.py
+                -- /home/${{ secrets.RECEPTOR_RELEASE_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/src/app.py
             pm2 describe simulador > /dev/null 2>&1 \
               && pm2 restart simulador --update-env \
-              || pm2 start /home/${{ secrets.RECEPTOR_DEV_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/.venv/bin/python \
+              || pm2 start /home/${{ secrets.RECEPTOR_RELEASE_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/.venv/bin/python \
                 --name "simulador" \
-                -- /home/${{ secrets.RECEPTOR_DEV_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/src/simulator.py
+                -- /home/${{ secrets.RECEPTOR_RELEASE_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/src/simulator.py
             pm2 save
 
   deploy-production:
@@ -86,9 +86,9 @@ jobs:
       - name: Deploy Receptor to EC2 (production)
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.RECEPTOR_PROD_EC2_HOST }}
-          username: ${{ secrets.RECEPTOR_PROD_EC2_USER }}
-          key: ${{ secrets.RECEPTOR_PROD_EC2_SSH_KEY }}
+          host: ${{ secrets.RECEPTOR_RELEASE_EC2_HOST }}
+          username: ${{ secrets.RECEPTOR_RELEASE_EC2_USER }}
+          key: ${{ secrets.RECEPTOR_RELEASE_EC2_SSH_KEY }}
           script: |
             cd ~/API-4DSM-RECEPTOR-DADOS
             git fetch --all
@@ -98,12 +98,12 @@ jobs:
             pip install -r requirements.txt
             pm2 describe receptor > /dev/null 2>&1 \
               && pm2 restart receptor --update-env \
-              || pm2 start /home/${{ secrets.RECEPTOR_PROD_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/.venv/bin/python \
+              || pm2 start /home/${{ secrets.RECEPTOR_RELEASE_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/.venv/bin/python \
                 --name "receptor" \
-                -- /home/${{ secrets.RECEPTOR_PROD_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/src/app.py
+                -- /home/${{ secrets.RECEPTOR_RELEASE_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/src/app.py
             pm2 describe simulador > /dev/null 2>&1 \
               && pm2 restart simulador --update-env \
-              || pm2 start /home/${{ secrets.RECEPTOR_PROD_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/.venv/bin/python \
+              || pm2 start /home/${{ secrets.RECEPTOR_RELEASE_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/.venv/bin/python \
                 --name "simulador" \
-                -- /home/${{ secrets.RECEPTOR_PROD_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/src/simulator.py
+                -- /home/${{ secrets.RECEPTOR_RELEASE_EC2_USER }}/API-4DSM-RECEPTOR-DADOS/src/simulator.py
             pm2 save
